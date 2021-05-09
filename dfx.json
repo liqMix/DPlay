@@ -1,0 +1,35 @@
+{
+  "canisters": {
+    "dplay": {
+      "main": "src/dplay/main.mo",
+      "type": "motoko"
+    },
+    "www": {
+      "dependencies": [
+        "dplay"
+      ],
+      "frontend": {
+        "entrypoint": "src/www/index.html"
+      },
+      "source": [
+        "src/www/components",
+        "src/www/utilities",
+        "dist/www/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "packtool": ""
+    }
+  },
+  "dfx": "0.7.0-beta.6",
+  "networks": {
+    "local": {
+      "bind": "127.0.0.1:8000",
+      "type": "ephemeral"
+    }
+  },
+  "version": 1
+}
