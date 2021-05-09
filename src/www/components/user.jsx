@@ -23,7 +23,6 @@ export default class User extends React.Component {
   componentDidMount(){
     DPlay.getPlayer().then((result) => {
       const player = idl.fromOptional(result);
-      console.log(result);
       if(!result || result.length === 0) this.setState({render: this.createPlayerInput()});
       else this.setState({player: player});
     });
@@ -32,9 +31,7 @@ export default class User extends React.Component {
   createPlayer(){
     this.setState({render: "Creating user..."});
     DPlay.createPlayer(this.state.playername).then((result) => {
-      console.log(result);
       const player = idl.fromOptional(result);
-      console.log(player);
       if(player) this.setState({player: player});
       else this.setState({
         error: "Player name already taken.",
@@ -58,7 +55,7 @@ export default class User extends React.Component {
     if(this.state.player){
       render =  (
         <>
-          <h1>{this.state.player}</h1>
+          <h1>{this.state.player.name}</h1>
           <p>ID: {this.state.player.id}</p>
         </>
       )

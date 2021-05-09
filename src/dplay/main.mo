@@ -17,7 +17,7 @@ shared(msg) actor class Game() {
   private stable var playerNameList: List.List<Types.PlayerName> = List.nil();
 
   // Gets the player for a caller
-  public shared (msg) func getPlayer() : async ?Text {
+  public shared (msg) func getPlayer() : async ?Types.Player {
     Debug.print("Getting player information...");
     Debug.print(Principal.toText(msg.caller));
 
@@ -26,11 +26,11 @@ shared(msg) actor class Game() {
         Debug.print("No player found.");
         return null;
       };
-      case (?player) {
+      case (?playerName) {
         Debug.print("Player found.");
         if(msg.caller == owner)
           Debug.print("And you're the owner! helo ownr :)");
-        return ?player;
+        return Trie.find(playerList, textKey(playerName), Text.equal);
       };
     };
   };
