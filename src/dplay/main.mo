@@ -12,25 +12,25 @@ shared(msg) actor class Game() {
   let owner = msg.caller;
 
   // User Info
-  private stable var idToName : Trie.Trie<Types.PlayerID, Types.PlayerName> = Trie.empty();
-  private stable var playerList : Trie.Trie<Types.PlayerName, Types.Player> = Trie.empty(); 
-  private stable var playerNameList: List.List<Types.PlayerName> = List.nil();
+  private stable var playerList : Trie.Trie<Types.PlayerID, Types.Player> = Trie.empty();
+  private stable var playerNameList: Trie.Trie<Types.PlayerName, Types.PlayerID> = Trie.empty();
 
   // Gets the player for a caller
   public shared (msg) func getPlayer() : async ?Types.Player {
     Debug.print("Getting player information...");
     Debug.print(Principal.toText(msg.caller));
 
-    switch(Trie.find(idToName, textKey(Principal.toText(msg.caller)), Text.equal)){
+
+    switch(Trie.find(playerList, textKey(Principal.toText(msg.caller)), Text.equal)){
       case null {
         Debug.print("No player found.");
         return null;
       };
-      case (?playerName) {
+      case (?player) {
         Debug.print("Player found.");
         if(msg.caller == owner)
           Debug.print("And you're the owner! helo ownr :)");
-        return Trie.find(playerList, textKey(playerName), Text.equal);
+        return ?player;
       };
     };
   };
@@ -44,26 +44,28 @@ shared(msg) actor class Game() {
     Debug.print("Checking for user...");
 
     // Check if user has existing player info
-    switch(Trie.find(idToName, textKey(caller), Text.equal)){
+    switch(Trie.find(playerList, textKey(caller), Text.equal)){
       case null {
         Debug.print("No player found for ID...");
       };
-      case (?playerName) {
-        return Trie.find(playerList, textKey(playerName), Text.equal);
+      case (?player) {
+        return ?player;
       };
     };
 
     // Check if name is already taken
-    if(List.some(playerNameList, func (item: Text):Bool {playerName == item})){
-      Debug.print("Name already taken, returning null...");
-      return null; 
+    switch(Trie.find(playerNameList, textKey(playerName), Text.equal)){
+      case (?player) {
+        Debug.print("Name already taken, returning null...");
+        return null;
+      };
+      case null {};
     };
 
     // Create new player
     let player: Types.Player = Utils.initPlayer(caller, playerName);
-    playerList := Trie.replace(playerList, textKey(playerName), Text.equal, ?player).0;
-    idToName := Trie.replace(idToName, textKey(caller), Text.equal, ?playerName).0;
-    playerNameList := List.push(playerName, playerNameList);
+    playerList := Trie.replace(playerList, textKey(caller), Text.equal, ?player).0;
+    playerNameList := Trie.replace(playerNameList, textKey(playerName), Text.equal, ?caller).0;
     Debug.print("Player created for user, returning player...");
     return ?player;
   };
