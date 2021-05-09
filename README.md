@@ -18,9 +18,9 @@ Only one game between two unique players is allowed at a time.
 
 # Build
 - Clone the repo
-- Run `dpx start` in one console window to start the local dpx service
+- Run `dfx start` in one console window to start the local dpx service
 - Run `npm install` to install the node dependencies
-- Run `dpx deploy` to deploy the canisters
+- Run `dfx deploy` to deploy the canisters
 
 # DFX Intro
 Welcome to your new DPlay project and to the internet computer development community. By default, creating a new project adds this README and some template files to your project directory. You can edit these template files to customize your project and to include your own code to speed up the development cycle.
