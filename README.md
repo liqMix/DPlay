@@ -17,6 +17,8 @@ Only one game between two unique players is allowed at a time.
 - Match History
 
 # Build
+- Install DFX v0.7.0-beta.6 `DFX_VERSION=0.7.0-beta.6 -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"`
+- Install node
 - Clone the repo
 - Run `dfx start` in one console window to start the local dpx service
 - Run `npm install` to install the node dependencies
