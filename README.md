@@ -1,5 +1,5 @@
 # DPlay
-This is a small project to explore Dfinity platform, DFX, and the Makoto language.
+This is a small project to explore Dfinity platform, DFX, and the Mokoto language.
 
 The goal is to provide a simple game between two players, and allowing both players to wager identical amounts on the outcome. The game is a simple one-dimensional euclidean distance from a random number. IE: A random number is generated between a given range and is considered the target. Each player must then guess a number. Whoever has the closest number to the target wins both the wagers. A tie refunds the wagers to the players
 
@@ -23,6 +23,8 @@ Only one game between two unique players is allowed at a time.
 - Run `dfx start` in one console window to start the local dpx service
 - Run `npm install` to install the node dependencies
 - Run `dfx deploy` to deploy the canisters
+- Wait
+- View page at `http://127.0.0.1:8000/?canisterId=[CANISTER-ID]` using `www` canister ID
 
 # DFX Intro
 Welcome to your new DPlay project and to the internet computer development community. By default, creating a new project adds this README and some template files to your project directory. You can edit these template files to customize your project and to include your own code to speed up the development cycle.
